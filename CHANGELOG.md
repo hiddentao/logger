@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/hiddentao/logger/compare/v1.0.0...v1.1.0) (2025-04-13)
+
+
+### Features
+
+* demo to test it out ([bbbcbfa](https://github.com/hiddentao/logger/commit/bbbcbfa132eda908bbe1af3c68374390918b8283))
+
 # 1.0.0 (2025-04-13)
 
 
