@@ -1,5 +1,7 @@
 # @hiddentao/logger
 
+[![CI](https://github.com/hiddentao/logger/actions/workflows/ci.yml/badge.svg)](https://github.com/hiddentao/logger/actions/workflows/ci.yml)
+
 A lightweight, flexible, and powerful logging library for JavaScript/TypeScript applications.
 
 ## Features
