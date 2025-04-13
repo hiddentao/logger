@@ -1,5 +1,8 @@
 {
   "name": "@hiddentao/logger",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.1.0",
   "description": "A flexible and customizable logging library for JavaScript/TypeScript applications",
   "module": "dist/index.js",
@@ -19,7 +22,10 @@
     "clean": "rm -rf dist",
     "prepublishOnly": "bun run clean && bun run build",
     "test": "bun test",
-    "test:watch": "bun test --watch"
+    "test:watch": "bun test --watch",
+    "prepare": "husky",
+    "commit": "cz",
+    "commitlint": "commitlint --edit"
   },
   "keywords": [
     "logger",
@@ -39,9 +45,18 @@
   "homepage": "https://github.com/hiddentao/logger#readme",
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.1",
     "@types/bun": "latest",
     "@types/node": "^22.14.1",
     "bun-types": "^1.2.9",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^9.1.7",
+    "semantic-release": "^24.2.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
@@ -49,5 +64,15 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
