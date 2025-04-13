@@ -23,6 +23,7 @@
     "prepublishOnly": "bun run clean && bun run build",
     "test": "bun test",
     "test:watch": "bun test --watch",
+    "lint": "biome lint .",
     "prepare": "husky",
     "commit": "cz",
     "commitlint": "commitlint --edit"
