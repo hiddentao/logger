@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A flexible and customizable logging library for JavaScript/TypeScript applications",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -71,7 +71,11 @@
       "@commitlint/config-conventional"
     ],
     "rules": {
-      "body-max-line-length": [2, "always", 400]
+      "body-max-line-length": [
+        2,
+        "always",
+        400
+      ]
     }
   },
   "config": {
