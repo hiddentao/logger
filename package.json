@@ -12,6 +12,10 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./transports/console": {
+      "import": "./dist/transports/console.js",
+      "types": "./dist/transports/console.d.ts"
     }
   },
   "files": [
