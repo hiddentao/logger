@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/hiddentao/logger/compare/v1.1.0...v1.1.1) (2025-04-13)
+
+
+### Bug Fixes
+
+* transports were not being exported ([c66ab84](https://github.com/hiddentao/logger/commit/c66ab843aa943155fb15970fa5dddc85496f59dc))
+
 # [1.1.0](https://github.com/hiddentao/logger/compare/v1.0.0...v1.1.0) (2025-04-13)
 
 
