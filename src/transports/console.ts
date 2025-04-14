@@ -6,6 +6,8 @@ export interface ConsoleTransportOptions {
   showTimestamps?: boolean
   /** Whether to disable colors */
   noColor?: boolean
+  /** Custom formatter for message parts */
+  formatMessagePart?: (value: any) => string
 }
 
 /**
@@ -19,6 +21,7 @@ export class ConsoleTransport implements Transport {
     this.options = {
       showTimestamps: false,
       noColor: false,
+      formatMessagePart: undefined,
       ...options,
     }
   }
@@ -52,11 +55,59 @@ export class ConsoleTransport implements Transport {
       ? `<${this.options.noColor ? entry.category : pc.bold(entry.category)}> `
       : ""
 
+    // Format message parts
+    const formattedMessage = this.formatMessageParts(entry.messageParts || [entry.message])
+
     // Combine all parts
-    const fullMessage = `${timestamp}${levelStr} ${category}${entry.message}`
+    const fullMessage = `${timestamp}${levelStr} ${category}${formattedMessage}`
 
     // Apply color to the entire log line based on severity
     return this.colorize(levelColor, fullMessage)
+  }
+
+  /**
+   * Format message parts according to their types
+   */
+  private formatMessageParts(messageParts: any[]): string {
+    if (!messageParts || messageParts.length === 0) {
+      return ""
+    }
+
+    return messageParts
+      .map((part) => {
+        // Use custom formatter if provided
+        if (this.options.formatMessagePart) {
+          return this.options.formatMessagePart(part)
+        }
+
+        // Default formatting
+        if (part === null) {
+          return "null"
+        }
+        
+        if (part === undefined) {
+          return "undefined"
+        }
+        
+        if (typeof part === "boolean") {
+          return part ? "true" : "false"
+        }
+        
+        if (typeof part === "string" || typeof part === "number") {
+          return String(part)
+        }
+        
+        if (typeof part === "object") {
+          // Check if object has a non-default toString method
+          if (part.toString && part.toString !== Object.prototype.toString) {
+            return part.toString()
+          }
+          return JSON.stringify(part)
+        }
+        
+        return String(part)
+      })
+      .join(" ")
   }
 
   /**

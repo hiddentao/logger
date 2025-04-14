@@ -148,4 +148,149 @@ describe("ConsoleTransport", () => {
     expect(formattedMsg).toContain("test-category");
     expect(formattedMsg).toContain(">");
   });
+  
+  test("formats multiple message parts with spaces between them", () => {
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.INFO,
+      message: "",
+      messageParts: ["Hello", "world", 123]
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain("Hello world 123");
+  });
+  
+  test("formats boolean values as 'true' or 'false'", () => {
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.INFO,
+      message: "",
+      messageParts: ["Status:", true, "Enabled:", false]
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain("Status: true Enabled: false");
+  });
+  
+  test("formats objects using JSON.stringify", () => {
+    const testObj = { name: "test", value: 42 };
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.INFO,
+      message: "",
+      messageParts: ["Object:", testObj]
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain(`Object: ${JSON.stringify(testObj)}`);
+  });
+  
+  test("formats arrays using JSON.stringify", () => {
+    const testArray = [1, 2, 3];
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.INFO,
+      message: "",
+      messageParts: ["Array:", testArray]
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain(`Array: ${JSON.stringify(testArray)}`);
+  });
+  
+  test("handles null and undefined values", () => {
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.INFO,
+      message: "",
+      messageParts: ["Null:", null, "Undefined:", undefined]
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain("Null: null Undefined: undefined");
+  });
+  
+  test("uses custom formatMessagePart function when provided", () => {
+    transport = new ConsoleTransport({
+      formatMessagePart: (value) => {
+        if (typeof value === 'object' && value !== null) {
+          return "OBJECT";
+        }
+        return String(value).toUpperCase();
+      }
+    });
+    
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.INFO,
+      message: "",
+      messageParts: ["test", 123, { a: 1 }]
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain("TEST 123 OBJECT");
+  });
+  
+  test("falls back to message if messageParts is not provided", () => {
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.INFO,
+      message: "Legacy message",
+      messageParts: []
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain("Legacy message");
+  });
+  
+  test("uses toString method when available on objects", () => {
+    class CustomObject {
+      toString() {
+        return "CUSTOM_STRING_REPRESENTATION";
+      }
+    }
+    
+    const customObj = new CustomObject();
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.INFO,
+      message: "",
+      messageParts: ["Custom object:", customObj]
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain("Custom object: CUSTOM_STRING_REPRESENTATION");
+  });
+  
+  test("falls back to JSON.stringify when toString is not customized", () => {
+    const regularObj = { id: 123, name: "test" };
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.INFO,
+      message: "",
+      messageParts: ["Regular object:", regularObj]
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain(`Regular object: ${JSON.stringify(regularObj)}`);
+  });
 }); 
