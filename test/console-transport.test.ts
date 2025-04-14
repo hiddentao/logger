@@ -293,4 +293,22 @@ describe("ConsoleTransport", () => {
     const [formattedMsg] = consoleLogSpy.mock.calls[0];
     expect(formattedMsg).toContain(`Regular object: ${JSON.stringify(regularObj)}`);
   });
+
+  test("formats Error objects with name and message", () => {
+    const error = new Error("Something went wrong");
+    error.name = "CustomError";
+    const entry: LogEntry = {
+      timestamp: new Date(),
+      level: LogLevel.ERROR,
+      message: "",
+      messageParts: ["Error object:", error]
+    };
+    
+    transport.write(entry);
+    
+    const [formattedMsg] = consoleLogSpy.mock.calls[0];
+    expect(formattedMsg).toContain("Error object:");
+    expect(formattedMsg).toContain("CustomError: Something went wrong");
+    expect(formattedMsg).toContain("stack:");
+  });
 }); 

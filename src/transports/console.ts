@@ -107,6 +107,11 @@ export class ConsoleTransport implements Transport {
             return JSON.stringify(part)
           }
           
+          // Special handling for Error objects - include stack trace
+          if (part instanceof Error) {
+            return `${part.toString()}${part.stack ? `\nstack: ${part.stack}` : ''}`
+          }
+          
           // Check if object has a non-default toString method
           if (part.toString && part.toString !== Object.prototype.toString) {
             return part.toString()
