@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/hiddentao/logger/compare/v1.1.1...v1.2.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* array stringification ([1fb1146](https://github.com/hiddentao/logger/commit/1fb114620b7d638ca514cfbc2b06b9085eaf30a4))
+
+
+### Features
+
+* better console formatting ([82eaf3c](https://github.com/hiddentao/logger/commit/82eaf3c533d528770692560b2b255b2946ac039a))
+
 ## [1.1.1](https://github.com/hiddentao/logger/compare/v1.1.0...v1.1.1) (2025-04-13)
 
 
