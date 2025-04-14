@@ -3,7 +3,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A flexible and customizable logging library for JavaScript/TypeScript applications",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
