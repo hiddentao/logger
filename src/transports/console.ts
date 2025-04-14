@@ -55,8 +55,12 @@ export class ConsoleTransport implements Transport {
       ? `<${this.options.noColor ? entry.category : pc.bold(entry.category)}> `
       : ""
 
-    // Format message parts
-    const formattedMessage = this.formatMessageParts(entry.messageParts || [entry.message])
+    // Format message parts - fall back to message if messageParts is empty
+    let messageParts = entry.messageParts || [];
+    if (messageParts.length === 0 && entry.message) {
+      messageParts = [entry.message];
+    }
+    const formattedMessage = this.formatMessageParts(messageParts)
 
     // Combine all parts
     const fullMessage = `${timestamp}${levelStr} ${category}${formattedMessage}`
@@ -98,6 +102,11 @@ export class ConsoleTransport implements Transport {
         }
         
         if (typeof part === "object") {
+          // Always use JSON.stringify for arrays
+          if (Array.isArray(part)) {
+            return JSON.stringify(part)
+          }
+          
           // Check if object has a non-default toString method
           if (part.toString && part.toString !== Object.prototype.toString) {
             return part.toString()
