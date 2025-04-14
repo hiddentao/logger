@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/hiddentao/logger/compare/v1.2.0...v1.3.0) (2025-04-14)
+
+
+### Features
+
+* error object formatting ([d2ae718](https://github.com/hiddentao/logger/commit/d2ae718891669dfc47f30b332ad6d544e46166e8))
+
 # [1.2.0](https://github.com/hiddentao/logger/compare/v1.1.1...v1.2.0) (2025-04-14)
 
 
