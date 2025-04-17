@@ -11,11 +11,13 @@
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./transports/console": {
       "import": "./dist/transports/console.js",
-      "types": "./dist/transports/console.d.ts"
+      "types": "./dist/transports/console.d.ts",
+      "default": "./dist/transports/console.js"
     }
   },
   "files": [
