@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/hiddentao/logger/compare/v1.3.0...v1.3.1) (2025-04-17)
+
+
+### Bug Fixes
+
+* default export in pkg ([46d13ef](https://github.com/hiddentao/logger/commit/46d13ef7f5791fd016a657b371ec94e9cef7047c))
+
 # [1.3.0](https://github.com/hiddentao/logger/compare/v1.2.0...v1.3.0) (2025-04-14)
 
 
