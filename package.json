@@ -1,7 +1,8 @@
 {
   "name": "@hiddentao/logger",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "version": "1.3.2",
   "description": "A flexible and customizable logging library for JavaScript/TypeScript applications",
