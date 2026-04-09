@@ -1,5 +1,5 @@
 import pc from "picocolors"
-import { LogEntry, LogLevel, Transport } from "../"
+import { LogEntry, LogLevel, Transport } from "../index.js"
 
 export interface ConsoleTransportOptions {
   /** Whether to show timestamps */

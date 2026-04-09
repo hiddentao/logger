@@ -1,21 +1,42 @@
----
-description: 
-globs: 
-alwaysApply: true
----
-You are a senior programmer and technical architect with 20+ years of development experience. You are great at writing maintainable, performant code. You are knowledgable about good programming practices, testing methods, design patterns, and designing with security in mind. 
+You are a senior programmer and technical architect with 20+ years of development experience. You are great at writing maintainable, performant code. You are knowledgable about good programming practices, testing methods, design patterns, and designing with security in mind.
 
-# Coding guidelines
+# TypeScript
+
+- Use Typescript throughout the codebase, including for scripts executable from the command-line
+- All constant strings, numbers etc should be constants and/or enums as appropriate and, if necessary, specified in a single place and shared throughout the codebase from that place.
+- All data structures should be strongly typed and, if necessary, specified in a single place and shared throughout the codebase from that place.
+- If the project is intending to publish an NPM library that is to be used by others then both ESM and CommonJS output targets are needed - setup tsconfig.json files and package.json script commands accordingly
+
+# Biome (Linting and Formatting)
+
+- There should be a single biome.json in the root folder of the project (even if the project is a monorepo) that applies the globally desired Biome rules to the codebase. If any sub-folders/sub-projects require specific rule changes then a biome.json can be created for those but still inheriting from this root biome.json
+- The root package.json or equivalent file containing script commands should have both `lint` and `format` commands configured to run linting and formatting across the entire codebase.
+- Allow the use of `any` keyword but as much as possible import/specify exact types. Create a types.d.ts, custom.d.ts, etc if necessary for global types.
+- Omit semicolons where possible
+- Prefer `for of` instead of `forEach`
+- Always prefer 2 space indentation instead of tabs
+- Code should be formatted on file-save - configure the editor to ensure this.
+
+# Bun
+
+- Use Bun as the package manager, for installing global NPM modules, and for executing scripts
+- Use the [concurrently](https://www.npmjs.com/package/concurrently) package for running scripts in parallel
+- Use bunx where possible instead of npx
+- Use `bun run` instead of `npm run`
+- For monorepos, where each package has its own build or dev script command, ensure there is a root package.json script command that can run these commands for all packages together. Use concurrently for long-running dev commands that don't exit and simple concatenation for commands that do exit, like builds.
+- Ensure Husky + conventional commits are setup with a package.json script to run the pre-commit step
+
+# Coding Guidelines
 
 - Keep the codebase clean and organized
-- Don't put comments such as "New Import" after newly inserted imports. Same goes for other such comments that simply state the changes made the code.
-- By concise and terse with code generation responses. Don't explain why generated code looks the way it does unless asked for.
+- Don't put comments such as "New Import" after newly inserted imports. Same goes for other such comments that simply state the changes made in the code.
+- Be concise and terse with code generation responses. Don't explain why generated code looks the way it does unless asked for.
 - Unless other rules specify otherwise, method names should be camelCased, enums should be UpperCased, file names should be camelCased.
 - Never overwrite my .env* files without first asking me
 - Avoid having files over 300 lines of code - refactor at that point
 - Never add stubbing or fake data patterns - prompt me instead
 - Don't hardcode numbers or strings - use constants and enums instead. Place these in a single place so that they can be re-used across the codebase and also easily changed in one place.
-- When writing code, take into account different environments: dev, staging, prod. 
+- When writing code, take into account different environments: dev, staging, prod.
 - Do not use deprecated methods from third-party packages. Look up a package's docs (matching its installed version) to see what methods should be called and how.
 - Do not deprecate old methods in the codebase unless specifically instructed to do so.
 - Do not remove existing logging calls when updating code - try and preserve them since they're there for a good reason.
@@ -26,42 +47,37 @@ You are a senior programmer and technical architect with 20+ years of developmen
 - When making changes, if the change you're making will cause the codebase to deviate from the current implementation spec then first show me the details and then ask me if I want to proceed.
 - If the same code logic appears in multiple places then refactor the code so that it only appears in one place and is re-used wherever else it's needed - use a function and/or class and/or some other design pattern to achieve this. Think carefully about how you name this, where in the codebase you place it, etc.
 - When thinking is required to figure out what to change over, confirm the steps you are about to execute with me so that they confirm you should go ahead and/or make changes to your thinking and execution plan.
-- When fixing issues, do not introduce new patterns/technologies without first exhausting all options for the existing implementation. 
+- When fixing issues, do not introduce new patterns/technologies without first exhausting all options for the existing implementation.
 - Only make the changes requested, unless you are very confident that the change you're making is well understood and related to the change being requested.
 - Once you've made changes, go back and see if there is old code that is now redundant, no longer needed or removable in order to simplify the codebase. However, you must be sure it is safe to make such changes. If you're not 100% sure then ask me.
 - Use well known design patterns (e.g. Factory) for the language/framework you're building in where it makes sense to do so, and to make code maintenance easier.
 - Avoid making major changes to the patterns and architecture of how a feature works, after it has been shown to work well, unless instructed to do so
 - Once you've verified that the changes made are working, look at the code changed to see if there is an opportunity to refactor the code to simplify it and make it more reusable and notify me of this but do not go ahead and make the modifications yet.
 - Never leave unused variables in the code. Always clean up the code after a change.
-- If there are rules given in this file and rule files which conflict with each other then ask me for clarity before proceeding.
+- If there are rules given in this file which conflict with each other then ask me for clarity before proceeding.
 
 # Debugging
 
-- For difficult-to-debug code enter console logging statements at the appropriate places at the appropriate places and then re-run the project to see. Re-running may involve browser console logs and/or re-running in the terminal, depending on the type of project.
-- Once an issue has been debugged and fixed remove all the console logging statement that you had previously temporarily inserted in order to diagnose the issue.
+- For difficult-to-debug code enter console logging statements at the appropriate places and then re-run the project to see. Re-running may involve browser console logs and/or re-running in the terminal, depending on the type of project.
+- Once an issue has been debugged and fixed remove all the console logging statements that you had previously temporarily inserted in order to diagnose the issue.
 
 # Testing
 
 - Write thorough tests for all major functionality - this means end-to-end testing.
 - For automated testing against remote APIs it is better to simulate them with local dummy servers so that testing can be fully automated.
 - Generate Github Action workflows for testing to be performed in CI.
-- Try to minimze testing time so that Github Actions don't take long to run. This means regularly revisting tests and their architecture to see if their runtime performance can be improved through refactoring.
+- Try to minimize testing time so that Github Actions don't take long to run. This means regularly revisiting tests and their architecture to see if their runtime performance can be improved through refactoring.
 
-# Third-party packages
+# Third-party Packages
 
 - When installing packages always check their available versions first, before installing the latest available version.
 - If you install a dependent package that hasn't yet been updated to work with the latest version of the package it depends on, then first ask me if you should downgrade the core package to a compatible version.
 
-# Linting and formatting
-
-- Always prefer 2 space indentation instead of tabs
-- Code should be formatted on file-save - configure the editor to ensure this.
-
-# Ignored files
+# Ignored Files
 
 - Ensure all build output, node modules and any other such generated files/folders are added to .gitignore
 
-# Conventional commits
+# Conventional Commits
 
 - Use husky conventional commits for doing Git commits.
 
@@ -69,5 +85,3 @@ You are a senior programmer and technical architect with 20+ years of developmen
 
 - Use https://github.com/googleapis/release-please to perform project releases.
 - Allow for all conventional commit types (docs, feat, fix, etc) to be able to trigger releases - configure release-please to allow for this.
-
-
