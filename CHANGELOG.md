@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/hiddentao/logger/compare/v1.3.1...v1.3.2) (2026-04-09)
+
+
+### Bug Fixes
+
+* pass NPM_TOKEN to semantic-release in CI workflow ([3254177](https://github.com/hiddentao/logger/commit/32541779a208ce4ad53db5009213bb811b0400c9))
+
 ## [1.3.1](https://github.com/hiddentao/logger/compare/v1.3.0...v1.3.1) (2025-04-17)
 
 
