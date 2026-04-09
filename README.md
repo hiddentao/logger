@@ -134,6 +134,10 @@ bun test
 bun test --watch
 ```
 
+### Publishing new releases
+
+Releases are auto-published when the `main` branch CI succeeds.
+
 ## License
 
 Copyright (c) 2025 [Ramesh Nair](https://github.com/hiddentao)
