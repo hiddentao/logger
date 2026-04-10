@@ -1,3 +1,13 @@
+## [1.3.3](https://github.com/hiddentao/logger/compare/v1.3.2...v1.3.3) (2026-04-10)
+
+
+### Bug Fixes
+
+* **ci:** bump node to 24 to avoid broken npm in 22.22.2 toolcache ([ad6fadb](https://github.com/hiddentao/logger/commit/ad6fadb42782c8379357d127125f24d96e63d44e)), closes [actions/runner-images#13883](https://github.com/actions/runner-images/issues/13883)
+* **ci:** disable husky during semantic-release to bypass commit-msg hook ([10237f4](https://github.com/hiddentao/logger/commit/10237f41103d7cc05b55d3aa43c377394bf51e04))
+* **ci:** override @semantic-release/npm to v13 so OIDC verify is used ([a3e7cba](https://github.com/hiddentao/logger/commit/a3e7cba2f6a79292a33718c526e2ce6eb0b20210))
+* **ci:** upgrade @semantic-release/npm to v13 for OIDC support ([603efc3](https://github.com/hiddentao/logger/commit/603efc3ee8d28e8a8568f5c7154e8de981adc8c5))
+
 ## [1.3.2](https://github.com/hiddentao/logger/compare/v1.3.1...v1.3.2) (2026-04-09)
 
 
